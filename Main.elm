@@ -65,7 +65,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Response (Ok ()) ->
-            ( { status = "You're all set!" }, Cmd.none )
+            ( { status = "You're all set!!" }, Cmd.none )
 
         Response (Err err) ->
             let
