@@ -23,9 +23,23 @@ type Msg
     | DeleteById Int
 
 
+type
+    Sorting
+    --Sorting = Type
+    = Ascending String
+      -- Ascending = Function
+    | Descending String
+      -- Descending = Function
+    | Randomized
+
+
+
+-- Randomized = Constant
+
+
 initialModel : Model
 initialModel =
-    { query = "tutorial"
+    { query = "Hangry"
     , results =
         [ { id = 1
           , name = "TheSeamau5/elm-checkerboardgrid-tutorial"
@@ -67,12 +81,10 @@ view model =
             , span [ class "tagline" ] [ text "Like GitHub, but for Elm things." ]
             ]
         , input
-            [ class "search-query"
-              -- TODO onInput, set the query in the model
-            , defaultValue model.query
-            ]
+            [ class "search-query", onInput SetQuery, defaultValue (Debug.log "the query is: " model.query) ]
             []
         , button [ class "search-button" ] [ text "Search" ]
+        , p [] [ text model.query ]
         , ul [ class "results" ] (List.map viewSearchResult model.results)
         ]
 
@@ -84,17 +96,19 @@ viewSearchResult result =
         , a [ href ("https://github.com/" ++ result.name), target "_blank" ]
             [ text result.name ]
         , button
-            -- TODO add an onClick handler that sends a DeleteById msg
-            [ class "hide-result" ]
+            [ class "hide-result", onClick (DeleteById result.id) ]
             [ text "X" ]
         ]
 
 
 update : Msg -> Model -> Model
 update msg model =
-    -- TODO if we get a SetQuery msg, use it to set the model's query field,
-    -- and if we get a DeleteById msg, delete the appropriate result
-    model
+    case msg of
+        SetQuery query ->
+            { model | query = query }
+
+        DeleteById idToHide ->
+            { model | results = List.filter (\{ id } -> id /= idToHide) model.results }
 
 
 main : Program Never Model Msg
