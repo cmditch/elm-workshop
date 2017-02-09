@@ -10,7 +10,7 @@ main =
             [ h1 [] [ text "ElmHub" ]
             , span
                 [ class "tagline" ]
-                [ text "Like Github, but for elm things" ]
+                [ text "Like Github, but for elmish things" ]
             ]
         ]
 

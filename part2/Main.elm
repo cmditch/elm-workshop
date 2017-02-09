@@ -36,10 +36,9 @@ main =
             [ elmHubHeader
             , ul [ class "results" ]
                 [ li []
-                    [ span [ class "star-count" ]
-                        [ text (toString model.result.stars) ]
+                    [ span [ class "star-count" ] [ text (toString model.result.stars) ]
                     , a [ href ("https://github.com/" ++ model.result.name) ] [ text model.result.name ]
-                    , p [] [ text (("lots of " ++ ((pluralizeLeaves 10) ++ " or one ")) ++ (pluralizeLeaves 1)) ]
+                    , p [] [ text ("lots of " ++ pluralizeLeaves 10 ++ " or one " ++ pluralizeLeaves 1) ]
                     ]
                 ]
             ]
