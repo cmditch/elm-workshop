@@ -5,7 +5,6 @@ import Html exposing (..)
 import Html.Attributes exposing (class, target, href, property, defaultValue)
 import Html.Events exposing (..)
 import Auth
-import Json.Decode exposing (Decoder)
 import Json.Decode.Pipeline exposing (..)
 
 
@@ -134,13 +133,13 @@ type Msg
     | HandleSearchError (Maybe String)
 
 
-decodeResponse : Value -> Msg
+decodeResponse : Value -> Msg 
 decodeResponse json =
-    -- TODO use decodeValue to decode the response into a Msg.
-    --
-    -- Hint: look at the definition of Msg and
-    -- the definition of responseDecoder
-    HandleSearchError (Just "TODO decode the response!")
+    case decodeValue responseDecoder json of
+        Ok results ->
+            HandleSearchResponse results
+        Err error -> 
+            HandleSearchError (Just error)
 
 
 port githubSearch : String -> Cmd msg
